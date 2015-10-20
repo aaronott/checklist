@@ -4,6 +4,7 @@
 // Modules which you authored in this project are intended to be
 // imported through new ES6 syntax.
 import { greet } from './hello_world/hello_world';
+import { sections } from './src/sections';
 
 // Node.js modules and those from npm
 // are required the same way as always.
@@ -18,8 +19,18 @@ console.log(manifest);
 // window.env contains data from config/env_XXX.json file.
 var envName = window.env.name;
 
+var imageDir = "/tmp";
+
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('greet').innerHTML = greet();
     document.getElementById('platform-info').innerHTML = os.platform();
     document.getElementById('env-name').innerHTML = envName;
+    var contentSections = sections();
+    // console.log(contentSections);
+    document.getElementById('content-menu').appendChild(contentSections);
 });
+
+// create our own events here
+var containerLoadEvent = document.createEvent('Event');
+containerLoadEvent.initEvent('containerLoad', true, true);
+window['containerLoadEvent'] = containerLoadEvent;

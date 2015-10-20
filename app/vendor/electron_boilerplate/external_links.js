@@ -21,6 +21,7 @@
     var supportExternalLinks = function (e) {
         var href;
         var isExternal = false;
+        var isInternal = false;
 
         var checkDomElement = function (element) {
             if (element.nodeName === 'A') {
@@ -29,9 +30,24 @@
             if (element.classList.contains('js-external-link')) {
                 isExternal = true;
             }
+            if (element.classList.contains('js-internal-link')) {
+                isInternal = true;
+            }
             if (href && isExternal) {
                 shell.openExternal(href);
                 e.preventDefault();
+            } else if (href && isInternal) {
+              var jetpack = require('fs-jetpack');
+              //var markdown = require('markdown').markdown;
+              var page = jetpack.read(href);
+
+              // document.getElementById('content-container').innerHTML = page;
+              // @TODO Add the md to html stuff
+
+              document.getElementById('container').innerHTML = page;
+              // document.getElementById('container').innerHTML = markdown.toHTML(page);
+              //e.preventDefault();
+
             } else if (element.parentElement) {
                 checkDomElement(element.parentElement);
             }
