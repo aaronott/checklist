@@ -45,8 +45,15 @@
               // @TODO Add the md to html stuff
 
               document.getElementById('container').innerHTML = page;
-              // document.getElementById('container').innerHTML = markdown.toHTML(page);
-              //e.preventDefault();
+
+              // This is where we fire off the containerLoad eventj
+              if (document.getElementById("container").dispatchEvent) {
+                  var clickevent=document.createEvent("MouseEvents");
+                  clickevent.initEvent("containerLoad", true, true);
+                  document.getElementById("container").dispatchEvent(clickevent);
+              }
+
+              e.preventDefault();
 
             } else if (element.parentElement) {
                 checkDomElement(element.parentElement);
