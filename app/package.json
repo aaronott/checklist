@@ -10,7 +10,8 @@
     "target": "development"
   },
   "dependencies": {
-    "walk": "^2.3.9",
-    "fs-jetpack": "^0.7.0"
+    "fs-jetpack": "^0.7.0",
+    "nedb": "^1.2.1",
+    "walk": "^2.3.9"
   }
 }
