@@ -10,6 +10,7 @@ var devHelper = require('./vendor/electron_boilerplate/dev_helper');
 var windowStateKeeper = require('./vendor/electron_boilerplate/window_state');
 
 var mainWindow;
+var windows = [];
 
 // Preserver of the window size and position between app launches.
 var mainWindowState = windowStateKeeper('main', {
@@ -30,6 +31,8 @@ app.on('ready', function () {
         mainWindow.maximize();
     }
 
+    mainWindow.setDocumentEdited(true);
+
     if (env.name === 'test') {
         mainWindow.loadUrl('file://' + __dirname + '/spec.html');
     } else {
@@ -46,6 +49,11 @@ app.on('ready', function () {
     });
 });
 
+
+
+app.on('before-quit', function(e) {
+
+});
 app.on('window-all-closed', function () {
     app.quit();
 });

@@ -10,6 +10,8 @@ import { sections } from './src/sections';
 // are required the same way as always.
 var os = require('os');
 var jetpack = require('fs-jetpack');
+var remote = require('remote');
+var app = remote.require('app');
 
 // Holy crap! This is browser window with HTML and stuff, but I can read
 // here files like it is node.js! Welcome to Electron world :)
@@ -18,14 +20,29 @@ console.log(manifest);
 
 // window.env contains data from config/env_XXX.json file.
 var envName = window.env.name;
+var basepath = app.getAppPath();
+var apppath  = app.getPath('appData') + "/" + app.getName();
+var sessionPath = apppath + "/session";
+app.setPath('appData', sessionPath);
+fs.stat(sessionPath, function (err, stats){
+  if (err) {
+    fs.mkdirSync(sessionPath);
+  }
+});
 
-var imageDir = "/tmp";
+window['altered'] = true;
+
+console.log("basepath: " + basepath);
+// console.log("apppath: " + apppath);
+
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('greet').innerHTML = greet();
     document.getElementById('platform-info').innerHTML = os.platform();
     document.getElementById('env-name').innerHTML = envName;
-    var contentSections = sections();
+
+    var directory = __dirname + "/content/input";
+    var contentSections = sections(directory);
     // console.log(contentSections);
     document.getElementById('content-menu').appendChild(contentSections);
 });
@@ -34,3 +51,18 @@ document.addEventListener('DOMContentLoaded', function() {
 var containerLoadEvent = document.createEvent('Event');
 containerLoadEvent.initEvent('containerLoad', true, true);
 window['containerLoadEvent'] = containerLoadEvent;
+
+
+// var remote = require('remote');
+// var Menu = remote.require('menu');
+// var MenuItem = remote.require('menu-item');
+//
+// var menu = new Menu();
+// menu.append(new MenuItem({ label: 'MenuItem1', click: function() { console.log('item 1 clicked'); } }));
+// menu.append(new MenuItem({ type: 'separator' }));
+// menu.append(new MenuItem({ label: 'MenuItem2', type: 'checkbox', checked: true }));
+//
+// window.addEventListener('contextmenu', function (e) {
+//   e.preventDefault();
+//   menu.popup(remote.getCurrentWindow());
+// }, false);

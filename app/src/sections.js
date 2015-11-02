@@ -1,13 +1,17 @@
-export var sections = function() {
+export var sections = function(directory) {
 
   var walk    = require('walk');
   var sections  = [];
   var files   = [];
   var listElement = document.createElement("ul");
-
-  // console.log("Here1");
+  if (!directory) {
+    var directory = __dirname + '/content';
+  }
+  else {
+    console.log("Skip setting directory: " + directory);
+  }
   // Walker options
-  var walker  = walk.walk(__dirname + '/content', { followLinks: false });
+  var walker  = walk.walk(directory, { followLinks: false });
 
   walker.on('file', function(root, stat, next) {
       // Add this file to the list of files
@@ -18,29 +22,20 @@ export var sections = function() {
       var section = path.pop();
 
       if( Object.prototype.toString.call( sections[section] ) !== '[object Array]' ) {
-//        console.log(section + " is not an array");
         sections[section] = [];
-//        console.log(sections);
       }
 
       sections[section].push(topic);
       sections[section][topic] = [root + "/" + stat.name]
-      //topics.push(topic);
 
       next();
   });
 
   walker.on('end', function() {
-      //var sidebar = document.getElementById('sidebar');
-      //var main_section = document.getElementById('main');
-      //var listElement = document.createElement("ul");
-
-      //sidebar.appendChild(listElement);
       var x = null;
       var y = null;
 
       for (var k in sections) {
-
         var listItem = document.createElement("li");
         var item = k.split("_");
         item.shift();
@@ -60,15 +55,11 @@ export var sections = function() {
           if (item.length === 0) { continue; }
 
           anchor.href = sections[k][l];
-          //anchor.href = '#';
           anchor.innerHTML = item.join(" ");
           anchor.className = "js-internal-link";
 
-          // console.log(anchor);
-          //listItem2.innerHTML = item.join(" ");
           listItem2.appendChild(anchor);
           listElement2.appendChild(listItem2);
-          //console.log(listItem2);
         }
         listItem.appendChild(listElement2);
 
@@ -84,6 +75,5 @@ export var sections = function() {
       return listElement;
   });
 
-  //return 'sideBar';
   return listElement;
 };
