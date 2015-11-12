@@ -6,5 +6,7 @@ but I need a list of them somewhere so I know what still needs to be worked on
 - Persist single session (this simply means save an active report and have the
    ability to bring it back up later.)
 
+- Add + button. This will allow users to add more findings to each section.
+
 
 # Saving should export the content, the templates, and the database
