@@ -24,11 +24,25 @@ var basepath = app.getAppPath();
 var apppath  = app.getPath('appData') + "/" + app.getName();
 var sessionPath = apppath + "/session";
 app.setPath('appData', sessionPath);
+
+console.log(sessionPath)
+
 fs.stat(sessionPath, function (err, stats){
   if (err) {
     fs.mkdirSync(sessionPath);
   }
+  console.log(stats);
 });
+
+// Config the application paths. __dirname starts from the directory of app.html
+window.env.content_directory = __dirname + "/content";
+// window.env.content_directory = __dirname + "/content/input";
+// window.env.template_directory = __dirname + "/content/output";
+window.env.screenshot_directory = app.getPath('appData') + "/screen";
+window.env.database_file = app.getPath('appData') + '/datafile';
+window.env.temporary_directory = '/tmp/pchck';
+
+console.log(window.env);
 
 window['altered'] = true;
 

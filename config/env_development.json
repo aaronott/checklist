@@ -1,4 +1,9 @@
 {
   "name": "development",
-  "description": "Add here any environment specific stuff you like."
+  "description": "Add here any environment specific stuff you like.",
+  "content_directory":"",
+  "template_directory":"",
+  "screenshot_directory":"",
+  "database_file":"",
+  "temporary_directory":"/tmp"
 }

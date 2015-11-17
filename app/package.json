@@ -12,6 +12,7 @@
   "dependencies": {
     "fs-jetpack": "^0.7.0",
     "nedb": "^1.2.1",
-    "walk": "^2.3.9"
+    "walk": "^2.3.9",
+    "ncp": "^2.0.0"
   }
 }
