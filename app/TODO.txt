@@ -12,6 +12,9 @@ but I need a list of them somewhere so I know what still needs to be worked on
 - Remove session files on close.
   - test to see if the session has been saved.
 
+- When using 'New' from the menu, test to see if session has been saved.
+  - Also need to refresh the screen. (possibly create an index.html for initialization purposes)
+
 # Saving should export the content, the templates, and the database
 
 -- Save is working.
