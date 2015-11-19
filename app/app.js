@@ -27,13 +27,6 @@ app.setPath('appData', sessionPath);
 
 console.log(sessionPath)
 
-fs.stat(sessionPath, function (err, stats){
-  if (err) {
-    fs.mkdirSync(sessionPath);
-  }
-  console.log(stats);
-});
-
 // Config the application paths. __dirname starts from the directory of app.html
 window.env.content_directory = __dirname + "/content";
 // window.env.content_directory = __dirname + "/content/input";
@@ -43,9 +36,31 @@ window.env.database_file = app.getPath('appData') + '/datafile';
 window.env.temporary_directory = '/tmp/pchck';
 window.env.default_extension = 'pchck';
 
-console.log(window.env);
+// now that we have all that set, we need to add the content directory to the
+// current session directory to allow us to load from a saved file and use the
+// same location.
 
-window['altered'] = true;
+fs.stat(sessionPath, function (err, stats){
+  if (err) {
+    fs.mkdirSync(sessionPath);
+    var ncp = require('ncp').ncp;
+
+    ncp.limit = 16;
+    //ncp(source, destination, function (err) {
+    // ncp(window.env.database_file, window.env.temporary_directory, function (err) {
+
+    ncp(window.env.content_directory, app.getPath('appData') + "/content", function (err) {
+     if (err) {
+       return console.error(err);
+     }
+    });
+
+  }
+  else {
+    console.log('session already exists. we can just continue.');
+  }
+  console.log(stats);
+});
 
 console.log("basepath: " + basepath);
 // console.log("apppath: " + apppath);
@@ -56,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('platform-info').innerHTML = os.platform();
     document.getElementById('env-name').innerHTML = envName;
 
-    var directory = __dirname + "/content/input";
+    var directory = app.getPath('appData') + "/content/input";
     var contentSections = sections(directory);
     // console.log(contentSections);
     document.getElementById('content-menu').appendChild(contentSections);

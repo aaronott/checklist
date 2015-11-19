@@ -7,6 +7,15 @@ but I need a list of them somewhere so I know what still needs to be worked on
    ability to bring it back up later.)
 
 - Add + button. This will allow users to add more findings to each section.
+- save text from input boxes
 
+- Remove session files on close.
+  - test to see if the session has been saved.
 
 # Saving should export the content, the templates, and the database
+
+-- Save is working.
+
+### Still todo in save.
+  - check to see if file already exists and ask if it should be overwritten.
+  - save as same name if already saved.

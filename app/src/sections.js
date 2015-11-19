@@ -5,7 +5,7 @@ export var sections = function(directory) {
   var files   = [];
   var listElement = document.createElement("ul");
   if (!directory) {
-    var directory = __dirname + '/content';
+    var directory = __dirname + '/content/input';
   }
   else {
     console.log("Skip setting directory: " + directory);
