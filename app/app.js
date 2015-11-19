@@ -41,6 +41,7 @@ window.env.content_directory = __dirname + "/content";
 window.env.screenshot_directory = app.getPath('appData') + "/screen";
 window.env.database_file = app.getPath('appData') + '/datafile';
 window.env.temporary_directory = '/tmp/pchck';
+window.env.default_extension = 'pchck';
 
 console.log(window.env);
 
